@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export default fetch = () => {
+const Fetch = () => {
   const [repoList, setRepoList] = useState();
   const [username, setusername] = useState();
 
@@ -20,3 +20,5 @@ export default fetch = () => {
     setusername,
   };
 };
+
+export default Fetch;
