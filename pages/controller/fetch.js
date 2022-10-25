@@ -11,6 +11,7 @@ const Fetch = () => {
     axios
       .get(`https://api.github.com/users/${username}/repos`)
       .then((res) => {
+        setusername('');
         setRepoList(res.data);
         setLoading(false);
       })
@@ -20,6 +21,7 @@ const Fetch = () => {
   return {
     repoList,
     getRepos,
+    username,
     setusername,
     loading,
   };
