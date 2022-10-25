@@ -2,17 +2,17 @@ import styles from '../../../styles/Content.module.css';
 import Fetch from '../../controller/Fetch';
 
 const Content = () => {
-  const { repoList, getRepos, setusername } = Fetch();
+  const { repoList, getRepos, setusername, loading } = Fetch();
   return (
     <div className={styles.mainContainer}>
       <section className={styles.header}>
-        <h2>HOW TO GET GITHUB USER'S REPO</h2>
+        <h2>LETS FIND THEIR REPOS :D</h2>
       </section>
 
       <section className={styles.Content}>
-        <div>
-          <label htmlFor="inputName">search</label>
+        <div className={styles.inputWrapper}>
           <input
+            className={styles.input}
             type="text"
             placeholder="search by name"
             name="inputName"
@@ -22,6 +22,7 @@ const Content = () => {
             }}
           />
           <button
+            className={styles.button}
             onClick={() => {
               getRepos();
             }}
@@ -30,12 +31,18 @@ const Content = () => {
           </button>
         </div>
 
-        <div>
-          {(repoList || []).map((data, index) => (
-            <div className={styles.list} key={index}>
-              <p>{data.name}</p>
+        <div className={styles.listWrapper}>
+          {loading ? (
+            <div className={styles.loading}></div>
+          ) : (
+            <div>
+              {(repoList || []).map((data, index) => (
+                <div className={styles.list} key={index}>
+                  <p>{data.name}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       </section>
     </div>

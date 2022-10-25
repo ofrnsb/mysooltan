@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react';
 const Fetch = () => {
   const [repoList, setRepoList] = useState();
   const [username, setusername] = useState();
+  const [loading, setLoading] = useState();
 
   const getRepos = () => {
+    setLoading(true);
     axios
       .get(`https://api.github.com/users/${username}/repos`)
       .then((res) => {
         setRepoList(res.data);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   };
@@ -18,6 +21,7 @@ const Fetch = () => {
     repoList,
     getRepos,
     setusername,
+    loading,
   };
 };
 
