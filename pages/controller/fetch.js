@@ -1,20 +1,22 @@
-// import axios from 'axios';
-// import { useEffect } from 'react'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-// const fetch = () => {
-//   useEffect(() => {
-//     let a = true;
-//     if(a){
-//       axios.get(())
-//     }
-//     return () => {
-//       second
-//     }
-//   }, [third])
+export default fetch = () => {
+  const [repoList, setRepoList] = useState();
+  const [username, setusername] = useState();
 
-//   return (
-//     <div>fetch</div>
-//   )
-// }
+  const getRepos = () => {
+    axios
+      .get(`https://api.github.com/users/${username}/repos`)
+      .then((res) => {
+        setRepoList(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
-// export default fetch
+  return {
+    repoList,
+    getRepos,
+    setusername,
+  };
+};
