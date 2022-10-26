@@ -1,29 +1,34 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { appData } from '../modals/reducerModals';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading, setRepoList } from './action';
 
 const Fetch = () => {
-  const [repoList, setRepoList] = useState();
-  const [username, setusername] = useState();
-  const [loading, setLoading] = useState();
+  const uname = useSelector((state) => state.username);
+  const dispatch = useDispatch();
+
+  const setRepo = (res) => {
+    dispatch(setRepoList(res));
+  };
+
+  const getLoading = (res) => {
+    dispatch(setLoading(res));
+  };
 
   const getRepos = () => {
-    setLoading(true);
+    getLoading(true);
     axios
-      .get(`https://api.github.com/users/${username}/repos`)
+      .get(`https://api.github.com/users/${uname}/repos`)
       .then((res) => {
-        setusername('');
-        setRepoList(res.data);
-        setLoading(false);
+        setRepo(res.data);
+        getLoading(false);
       })
       .catch((err) => console.log(err));
   };
 
   return {
-    repoList,
     getRepos,
-    username,
-    setusername,
-    loading,
   };
 };
 

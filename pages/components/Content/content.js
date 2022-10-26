@@ -1,8 +1,19 @@
 import styles from '../../../styles/Content.module.css';
 import Fetch from '../../controller/Fetch';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserName } from '../../controller/action';
 
 const Content = () => {
-  const { repoList, getRepos, username, setusername, loading } = Fetch();
+  const { getRepos } = Fetch();
+  const dispatch = useDispatch();
+  const uname = useSelector((state) => state.username);
+  const loading = useSelector((state) => state.loading);
+  const repoList = useSelector((state) => state.repoList);
+
+  const setUname = (value) => {
+    dispatch(setUserName(value));
+  };
+
   return (
     <div className={styles.mainContainer}>
       <section className={styles.header}>
@@ -16,10 +27,10 @@ const Content = () => {
             type="text"
             placeholder="whose GITHUB?"
             name="inputName"
-            value={username}
+            value={uname}
             onChange={(e) => {
               const { value } = e.target;
-              setusername(value);
+              setUname(value);
             }}
           />
           <button
@@ -35,7 +46,7 @@ const Content = () => {
         <div className={styles.listWrapper}>
           {loading ? (
             <div className={styles.loading}></div>
-          ) : repoList ? (
+          ) : repoList.length > 1 ? (
             <div>
               <p className={styles.lord}>
                 i present your their repos list, my lord
